@@ -1,0 +1,11 @@
+{
+    "r_max": 75,
+    "hex_size": 1.56,
+    "length": 2600,
+    "liquid_gap": 5,
+    "gas_gap": 5,
+    "pattern_path": "/dali/lgrandi/peres/xenoscope/diffusion/LCE_patterns/",
+    "delta_t_lamp": 1,
+    "drift_delta_t": 1,
+    "path_to_model": "../TopArrayModel/"
+}
