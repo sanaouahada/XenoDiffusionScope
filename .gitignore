@@ -2,3 +2,4 @@
 patterns/
 figures/
 notebooks/.ipynb_checkpoints
+*.egg*

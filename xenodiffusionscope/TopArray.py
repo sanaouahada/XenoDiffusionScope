@@ -1,23 +1,22 @@
+import pickle
+
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate
 import scipy.interpolate
-import pickle
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle
-from matplotlib.patches import Rectangle
+from matplotlib.patches import Circle, Rectangle
 from tqdm import tqdm
-
 
 # Plots should be handled in separate Plotter file.
 
 class TopArray:
-    def __init__(self, tpc, mesh,model,path_to_patterns):
+    def __init__(self, tpc, mesh,model,path_to_patterns,path_to_model):
         self.model = model
         self.tpc = tpc
         self.path_to_patterns = path_to_patterns
         self.mesh = mesh
+        self.path_to_model = path_to_model
         
-        #self.load_top_array()
         self.make_results_grid()
         
         
@@ -41,7 +40,7 @@ class TopArray:
         return None
     
     def load_top_array(self):
-        with open('TopArrayModel/%s.pck'%self.model, 'rb') as file:
+        with open('%s/%s.pck'%(self.path_to_model, self.model), 'rb') as file:
             self.sensors = pickle.load(file)
         self.n_sensors = len(self.sensors)
         
@@ -94,7 +93,13 @@ class TopArray:
             pattern = pickle.load(file)
         return pattern
     
-    def load_all_patterns(self):
+    def load_all_patterns(self, all_at_once = False):
+        if all_at_once:
+            with open(self.path_to_patterns+'all_paterns.pck', 'rb') as file:
+                patterns = pickle.load(file)
+            self.patterns = patterns
+            return None
+        
         patterns = dict()
         for _hex_i in tqdm(range(self.mesh.n_hexes),
                            'Loading LCE patterns.',
@@ -122,10 +127,11 @@ class TopArray:
             else:
                 continue
         
-        self.results_interp = scipy.interpolate.RectBivariateSpline(self.grid_x, 
-                                                                    self.grid_y,
-                                                                    self.grid_zz,
-                                                                    s = 0)
+        self.results_interp = scipy.interpolate.RectBivariateSpline(
+            self.grid_x, 
+            self.grid_y,
+            self.grid_zz,
+            s = 0)
         return None
     
     def n_pe_in_sensors(self):
@@ -133,5 +139,5 @@ class TopArray:
                                           1, 
                                           self.sensors)
         self.pe_in_sensors = pe_in_sensors
-        return pe_in_sensors
+        return np.abs(pe_in_sensors)
         

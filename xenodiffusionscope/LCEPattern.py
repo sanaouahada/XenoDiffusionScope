@@ -1,8 +1,9 @@
+import matplotlib.pyplot as plt
 import numpy as np
 import scipy.integrate
 import scipy.interpolate
-import matplotlib.pyplot as plt
 from matplotlib.patches import Circle
+
 from .TPC import TPC
 
 #Matplotlib plots should be handled in separate file with Plotter.
@@ -16,9 +17,7 @@ class LCEPattern:
         
         # TO BE CLEANED UP
         self.TPC = TPC
-        self.z_gate = TPC.z_gate
         self.z_anode = TPC.z_anode
-        self.gate_mesh = TPC.gate_mesh
         self.r_max = TPC.radius
         
         #self.load_patterns()
@@ -37,8 +36,8 @@ class LCEPattern:
         self.smooth_pattern = smooth_pattern
         return None
     
-    #@classmethod
-    def get_xy_on_plane(self,x0,y0,z0,directions,z_prime):
+    @classmethod
+    def get_xy_on_plane(cls,x0,y0,z0,directions,z_prime):
         '''
         Return the (x,y) of the intersection of a vector with direction 
         (theta,phi), physics convention, starting at point (x0,y0,z0) and
@@ -49,14 +48,12 @@ class LCEPattern:
         final_pos = np.stack((x_prime, y_prime), axis = 1)
         return final_pos
     
-    #@classmethod
     def get_xy_on_circ_array(self, final_pos):
         final_r = TPC.get_r(final_pos[:,0],final_pos[:,1])
         mask_r = final_r < self.r_max
         final_pos_array = final_pos[mask_r]
         return final_pos_array
     
-    #@classmethod
     def get_hits_on_circ_array(self, x0,y0,z0):
         '''
         Get the positions of the toys that hit the circular area of the array.
@@ -70,7 +67,7 @@ class LCEPattern:
         final_pos_array = self.get_xy_on_circ_array(final_pos)
         return final_pos_array
     
-    #@classmethod
+
     def print_stats_of_hits(self, hits, n_traces):
         print('Initial number of photons: %s'%n_traces)
         print('Number of photons hit: '+
@@ -80,21 +77,6 @@ class LCEPattern:
                                 len(hits)/n_traces*100/2))
         return None
     
-    #@classmethod
-    #def load_patterns(self,redo_patterns):
-    #    '''
-    #    Load the interpolated functions of the pattern for a set of points.
-    #    Checks if they already exist and if `redo=True` to compute new ones
-    #    '''
-    #    pass
-    #   
-    #    if redo_patterns == True:
-    #        #for each hex center:
-    #        pattern = self.make_pattern_density(x_bin_step, y_bins_step)
-    #        with open('patterns/hex_%d.pck', 'wb') as file:
-    #            pickle.dump(pattern, file)
-    
-    #make this @classmethod??
     def get_pattern_density_hist2d(self, pos):
         
         x_min = y_min = -np.ceil(self.r_max*1.1)
@@ -123,7 +105,6 @@ class LCEPattern:
         hist_density = hist2d[0]/self.pattern_bin_area/(self.n_traces*2) #fraction/mm^2;
         return x_bin_middles,y_bin_middles,hist_density
     
-    # make @classmethod ??
     def make_pattern_density(self,pos):
         '''
         Takes the toy-MC results and makes the 2D density histogram, 

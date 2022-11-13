@@ -1,4 +1,4 @@
-import setuptools
+from setuptools import setup, find_packages
 
 def open_requirements(path):
     with open(path) as f:
@@ -12,14 +12,14 @@ requires = open_requirements('requirements.txt')
 with open('README.md', mode='r') as readme:
     long_description = readme.read()
 
-setuptools.setup(
-    name             = 'XenoDiffusionScope',
+setup(
+    name             = 'xenodiffusionscope',
     version          = '0.0.1',
+    packages=find_packages(exclude=['tests*']),
     author           = 'Ricardo Peres',
     author_email     = 'rperes@physik.uzh.ch',
     description      = 'A Python package to simulate the Xenoscope LXe TPC light readout.',
     url              = 'https://github.com/ricmperes/XenoDiffusionScope',
-    packages         = setuptools.find_packages(),
     include_package_data = True,
     long_description = long_description,
     long_description_content_type = 'text/markdown',

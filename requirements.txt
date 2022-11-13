@@ -1,7 +1,5 @@
 numpy
-warnings
 scipy
-pickle
 matplotlib
 tqdm
 hexalattice

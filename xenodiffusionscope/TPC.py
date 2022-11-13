@@ -1,6 +1,7 @@
 import numpy as np
 import warnings
 
+from .MeshGrid import MeshGrid
 
 class TPC:
     '''
@@ -82,8 +83,8 @@ class TPC:
     def get_xyz(r,theta,phi):
         '''Convert to cartesian following Physics standard spherical 
         coordinates.'''
-        x = r*np.cos(phi)*sin(theta)
-        y = r*np.sin(phi)*sin(theta)
+        x = r*np.cos(phi)*np.sin(theta)
+        y = r*np.sin(phi)*np.sin(theta)
         z = r*np.cos(theta)
         return x,y,z
     

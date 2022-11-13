@@ -1,5 +1,7 @@
 import numpy as np
 from hexalattice.hexalattice import create_hex_grid
+from tqdm import tqdm
+
 
 class MeshGrid:
     '''
