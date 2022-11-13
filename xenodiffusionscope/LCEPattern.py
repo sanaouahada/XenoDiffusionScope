@@ -126,6 +126,11 @@ class LCEPattern:
                                                          s = s)
         return interp2s
     
+    def make_pattern_from_pos(self,x0,y0,z0):
+        toy_events = self.get_hits_on_circ_array(x0,y0,z0)
+        pattern = self.make_pattern_density(toy_events)
+        return pattern
+
     @staticmethod
     def plot_pattern(tpc,pattern, hex_id):
         fig,ax = plt.subplots(1,1,figsize = (9,9), dpi = 100)
