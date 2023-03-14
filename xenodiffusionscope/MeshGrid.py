@@ -12,7 +12,8 @@ class MeshGrid:
     def __init__(self, r_max, hex_side):
         self.r_max = r_max
         self.hex_side = hex_side
-        self.hex_r = self.hex_side * np.sqrt(3)
+        self.hex_short_diagonal = self.hex_side * np.sqrt(3)
+        self.hex_long_diagonal = 2 * self.hex_side
         
         self.hex_centers = self.construct_mesh()
         self.n_hexes = len(self.hex_centers)
@@ -24,11 +25,11 @@ class MeshGrid:
           * a: size of the hexagons
         '''
         
-        n_hex_x = 2 * np.ceil(75/self.hex_r)
-        n_hex_y = 2 * np.ceil(75/(np.sqrt(2)*self.hex_side))
+        n_hex_x = 2 * np.ceil(self.r_max/self.hex_short_diagonal)
+        n_hex_y = 2 * np.ceil(self.r_max/(1.5*self.hex_side))
         
         hex_centers, _ = create_hex_grid(nx=n_hex_x, ny=n_hex_y, 
-                                         min_diam = self.hex_side,
+                                         min_diam = self.hex_short_diagonal,
                                          crop_circ = self.r_max,
                                          do_plot = False)
         

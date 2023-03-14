@@ -47,6 +47,7 @@ def prepare():
 
     Xenoscope = xds.TPC(r_max, length, liquid_gap, gas_gap, drift_field)
     mesh = Xenoscope.gate_mesh
+    print(f'Created {Xenoscope.gate_mesh.n_hexes} hex centers to compute.')
 
     scintillation = xds.LCEPattern(Xenoscope)
     scintillation.define_pattern_props(x_bin_step = x_bin_step, 
