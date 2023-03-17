@@ -46,25 +46,22 @@ class TPC:
     @classmethod
     def model_diffusion_longitudinal(self, drift_field):
         '''
-        Longitudinal diffusion model: TO DO.
-        For 100 V/cm -> ~26cm2/us from 1T
+        Longitudinal diffusion model from NEST v2.0.0 .
         '''
-        if drift_field != 100:
-            warnings.warn('Only the long. diffusino value for 100 V/cm is implemented, going with it for now.')
-        D_l = 26 #cm2/s
-        return D_l * 1e-4 #mm2/us
+        ans = (57.381 * np.power(drift_field, -0.22221) + 
+               127.27 * np.exp(-drift_field /32.821))
+        
+        return ans*1e-4 #mm2/us
     
     @classmethod
     def model_diffusion_transversal(self, drift_field):
         '''
-        Transversal diffusion model. Linear fit interpolation from the EXO200 paper data (Fig. 7) [
-        Curve fit: m=0.010635; b=52.888942
-        Linregress: m=0.013021; b=52.752949
+        Transversal diffusion model from NEST v2.0.0 .
         '''
-        m=0.010635
-        b=52.888942
-        ans = m * drift_field + b #cm2/s
-        return ans * 1e-4 #mm2/us
+        ans = (37.368 * np.power(drift_field, .093452) * 
+               np.exp(-8.1651e-5 * drift_field))
+        
+        return ans*1e-4 #mm2/us
     
     @staticmethod
     def get_r(x,y):
