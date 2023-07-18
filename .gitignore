@@ -4,3 +4,4 @@ figures/
 notebooks/.ipynb_checkpoints
 *.egg*
 *__pycache__*
+venv/

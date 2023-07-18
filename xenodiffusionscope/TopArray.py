@@ -89,13 +89,13 @@ class TopArray:
         return ans
     
     def load_pattern(self, hex_id):
-        with open(self.path_to_patterns + 'hex_v0_%d.pck'%hex_id, 'rb') as file:
+        with open(self.path_to_patterns + '/hex_%d.pck'%hex_id, 'rb') as file:
             pattern = pickle.load(file)
         return pattern
     
     def load_all_patterns(self, all_at_once = False):
         if all_at_once:
-            with open(self.path_to_patterns+'all_paterns.pck', 'rb') as file:
+            with open(self.path_to_patterns+'/all_patterns.pck', 'rb') as file:
                 patterns = pickle.load(file)
             self.patterns = patterns
             return None

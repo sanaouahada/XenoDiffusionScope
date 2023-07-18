@@ -49,7 +49,7 @@ class MeshGrid:
     def get_closest_hex(self, pos_xy, value = True):
         '''
         Given a reference grid and a point on the plane, return the grid index where 
-        the point is closeste to a grid point.
+        the point is closest to a grid point.
         '''
         distances = self.distance_to_reference_grid(pos_xy)
         idx_min_dist = np.argmin(distances)

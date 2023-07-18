@@ -139,8 +139,8 @@ class LCEPattern:
         _y = np.arange(-80,80,1)
         _xx,_yy = np.meshgrid(_x,_y, indexing='ij')
         _rr = TPC.get_r(_xx,_yy)
-        _xx = _xx[_rr < tpc.r_max]
-        _yy = _yy[_rr < tpc.r_max]
+        _xx = _xx[_rr < tpc.radius]
+        _yy = _yy[_rr < tpc.radius]
         _zz = pattern.ev(_xx,_yy)
         interpolated = ax.scatter(_xx, _yy, c=np.log10(_zz), marker = 's',
                                   s = 3, vmin = -6.2)
@@ -149,4 +149,4 @@ class LCEPattern:
         ax.set_aspect('equal')
         fig.colorbar(interpolated, ax = ax)
 
-        plt.savefig('figures/patterns/hex_v0_%d' %hex_id)
+        #plt.savefig('figures/patterns/hex_v0_%d' %hex_id)

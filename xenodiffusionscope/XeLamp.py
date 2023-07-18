@@ -31,7 +31,7 @@ class XeLamp:
     
     def emitted_electrons_in_interval(self,t0,tf, error = False):
         '''
-        Integrate the lamp pulse to number of electrons from t0 to tf.
+        Integrate the lamp pulse to number of electrons from t0 to tf. Gives population. 
         '''
         integral = scipy.integrate.quad(XeLamp.pulse_lamp,t0,tf,epsrel = 1e-6)
         
